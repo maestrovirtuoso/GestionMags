@@ -1,0 +1,19 @@
+<odoo>
+  <data>
+
+    <!-- Menu Principal -->
+    <menuitem id="main_menu" name="Gestion Boutique" sequence="10"/>
+
+    <!-- Sous-menu Catalogue -->
+    <menuitem id="menu_catalogue" name="Catalogue" parent="main_menu">
+        <menuitem id="menu_category" name="Catégories" action="action_view_category_list"/>
+        <menuitem id="menu_product" name="Produits" action="action_view_product_list"/>
+    </menuitem>
+
+    <!-- Sous-menu Administration -->
+    <menuitem id="menu_administration" name="Administration" parent="main_menu">
+        <menuitem id="menu_user" name="Utilisateurs" action="action_view_user_list"/>
+    </menuitem>
+
+  </data>
+</odoo>

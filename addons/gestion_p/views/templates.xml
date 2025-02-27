@@ -1,0 +1,248 @@
+<odoo>
+  <data>
+
+    <!-- ############################# CATEGORY ############################### -->
+    <record id="view_category_form" model="ir.ui.view">
+        <field name="name">gestionp.category.form</field>
+        <field name="model">gestionp_category</field>
+        <field name="arch" type="xml">
+            <form string="Catégorie">
+                <header>
+                    <button name="action_view_category_list" string="Retour" type="action"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <field name="product_ids" widget="many2many_tags" 
+                           options="{'no_create': True}" 
+                           string="Produits associés"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_category_tree" model="ir.ui.view">
+        <field name="name">gestionp.category.tree</field>
+        <field name="model">gestionp_category</field>
+        <field name="arch" type="xml">
+            <tree string="Catégories">
+                <field name="name" widget="handle"/>
+                <field name="product_ids" widget="many2many_tags" string="Nb Produits"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_view_category_list" model="ir.actions.act_window">
+        <field name="name">Liste des catégories</field>
+        <field name="res_model">gestionp_category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" eval="False"/>
+        <field name="target">current</field>
+    </record>
+
+    <!-- ############################# PRODUCT ############################### -->
+    <record id="view_product_form" model="ir.ui.view">
+        <field name="name">gestionp.product.form</field>
+        <field name="model">gestionp_product</field>
+        <field name="arch" type="xml">
+            <form string="Produit">
+                <header>
+                    <button name="action_view_product_list" string="Retour" type="action"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="category_id"/>
+                            <field name="prix" widget="monetary"/>
+                        </group>
+                        <group>
+                            <field name="image" widget="image" class="oe_avatar"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_product_tree" model="ir.ui.view">
+        <field name="name">gestionp.product.tree</field>
+        <field name="model">gestionp_product</field>
+        <field name="arch" type="xml">
+            <tree string="Produits">
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="prix" widget="monetary"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_search_view" model="ir.ui.view">
+        <field name="name">gestionp.product.search</field>
+        <field name="model">gestionp_product</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="category_id"/>
+                <filter string="Prix > 100" name="prix_sup_100" domain="[('prix','>',100)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_view_product_list" model="ir.actions.act_window">
+        <field name="name">Liste des produits</field>
+        <field name="res_model">gestionp_product</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_id" eval="False"/>
+        <field name="target">current</field>
+    </record>
+
+    <!-- ############################# USER ############################### -->
+    <record id="view_user_form" model="ir.ui.view">
+        <field name="name">gestionp.user.form</field>
+        <field name="model">gestionp_user</field>
+        <field name="arch" type="xml">
+            <form string="Utilisateur">
+                <header>
+                    <button name="action_view_user_list" string="Retour" type="action"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="prenom"/>
+                        <field name="username"/>
+                        <field name="date_naissance" widget="date"/>
+                        <field name="email" widget="email"/>
+                        <field name="password" password="True"/>
+                        <field name="city"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_user_tree" model="ir.ui.view">
+        <field name="name">gestionp.user.tree</field>
+        <field name="model">gestionp_user</field>
+        <field name="arch" type="xml">
+            <tree string="Utilisateurs" decoration-danger="email == ''">
+                <field name="name"/>
+                <field name="username"/>
+                <field name="email"/>
+                <field name="city"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="user_search_view" model="ir.ui.view">
+        <field name="name">gestionp.user.search</field>
+        <field name="model">gestionp_user</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="username"/>
+                <field name="email"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_view_user_list" model="ir.actions.act_window">
+        <field name="name">Liste des utilisateurs</field>
+        <field name="res_model">gestionp_user</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" eval="False"/>
+        <field name="target">current</field>
+    </record>
+
+    <!-- ############################# MENUS ############################### -->
+    <menuitem id="main_menu" name="Gestion Boutique" sequence="10"/>
+    <menuitem id="menu_catalogue" name="Catalogue" parent="main_menu">
+        <menuitem id="menu_category" name="Catégories" action="action_view_category_list"/>
+        <menuitem id="menu_product" name="Produits" action="action_view_product_list"/>
+    </menuitem>
+    <menuitem id="menu_administration" name="Administration" parent="main_menu">
+        <menuitem id="menu_user" name="Utilisateurs" action="action_view_user_list"/>
+    </menuitem>
+
+  </data>
+</odoo>
+
+<odoo>
+  <data>
+
+    <!-- Déclaration de l'action EN PREMIER -->
+    <record id="action_view_product_list" model="ir.actions.act_window">
+        <field name="name">Liste des produits</field>
+        <field name="res_model">gestionp_product</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_id" eval="False"/>
+        <field name="target">current</field>
+    </record>
+
+    <!-- Vue Formulaire Produit -->
+    <record id="view_product_form" model="ir.ui.view">
+        <field name="name">gestionp.product.form</field>
+        <field name="model">gestionp_product</field>
+        <field name="arch" type="xml">
+            <form string="Produit">
+                <header>
+                    <button name="gestion_p.action_view_product_list" 
+                            string="Retour" 
+                            type="action"
+                            class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="category_id"/>
+                            <field name="prix" widget="monetary"/>
+                        </group>
+                        <group>
+                            <field name="image" widget="image" class="oe_avatar"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue Liste Produits -->
+    <record id="view_product_tree" model="ir.ui.view">
+        <field name="name">gestionp.product.tree</field>
+        <field name="model">gestionp_product</field>
+        <field name="arch" type="xml">
+            <tree string="Produits">
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="prix" widget="monetary"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vue Recherche Produits -->
+    <record id="product_search_view" model="ir.ui.view">
+        <field name="name">gestionp.product.search</field>
+        <field name="model">gestionp_product</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="category_id"/>
+                <filter string="Prix > 100" name="prix_sup_100" domain="[('prix','>',100)]"/>
+            </search>
+        </field>
+    </record>
+
+  </data>
+</odoo>

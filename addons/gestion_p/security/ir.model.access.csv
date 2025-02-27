@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_user_all,Tous Utilisateurs,model_gestionp_user,,1,1,1,1
+access_category_all,Toutes Catégories,model_gestionp_category,,1,1,1,1
+access_product_all,Tous Produits,model_gestionp_product,,1,1,1,1
