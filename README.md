@@ -124,12 +124,3 @@ server {
 * odoo:17
 * postgres:16
 
-## Odoo 17.0 screenshots after successful installation.
-
-<img src="screenshots/odoo-17-welcome-screenshot.png" width="50%">
-
-<img src="screenshots/odoo-17-apps-screenshot.png" width="100%">
-
-<img src="screenshots/odoo-17-sales-screen.png" width="100%">
-
-<img src="screenshots/odoo-17-product-form.png" width="100%">
